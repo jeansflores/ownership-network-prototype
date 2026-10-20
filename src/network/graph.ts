@@ -34,7 +34,7 @@ export interface Network {
   conflictIds: Set<string>
 }
 
-export type NetworkSize = 'medium' | 'big'
+export type NetworkSize = 'small' | 'medium'
 
 /** A conflict is a person shared between our own house and an analysed house, or any entity on a restriction list. */
 export function computeConflicts(network: Network): Set<string> {

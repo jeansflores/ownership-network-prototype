@@ -86,7 +86,7 @@ const Page: FC = () => {
   const variant = (VARIANTS.some(v => v.key === searchParams.get('variant'))
     ? searchParams.get('variant')
     : 'A') as VariantKey
-  const size: NetworkSize = searchParams.get('size') === 'big' ? 'big' : 'medium'
+  const size: NetworkSize = searchParams.get('size') === 'medium' ? 'medium' : 'small'
   const network = useMemo(() => buildNetwork(size), [size])
 
   const houses = network.entities.filter(e => e.kind === 'company' && e.role !== 'own')
@@ -137,8 +137,8 @@ const Page: FC = () => {
             value={size}
             onChange={value => setParam('size', String(value))}
             options={[
+              { label: 'Casa Stark', value: 'small' },
               { label: 'Grandes casas', value: 'medium' },
-              { label: 'Westeros inteiro', value: 'big' },
             ]}
           />
           <Button icon={<Icon name="IconInfoCircle" />} onClick={() => setAbout(true)}>

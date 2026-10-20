@@ -252,82 +252,27 @@ function greatHouses(b: Builder) {
   return { stark, lannister, baratheon, tyrell, bolton, frey, tully, greyjoy, targaryen, arryn, martell }
 }
 
-const VASSALS: Record<string, string[]> = {
-  stark: ['Glover', 'Manderly', 'Cerwyn', 'Hornwood', 'Tallhart', 'Dustin', 'Ryswell', 'Flint', 'Locke'],
-  lannister: ['Marbrand', 'Lefford', 'Crakehall', 'Swyft', 'Brax', 'Westerling', 'Banefort', 'Payne', 'Serrett'],
-  baratheon: ['Estermont', 'Tarth', 'Selmy', 'Dondarrion', 'Caron', 'Swann', 'Penrose', 'Connington'],
-  tyrell: ['Hightower', 'Florent', 'Rowan', 'Oakheart', 'Fossoway', 'Caswell', 'Ashford', 'Merryweather'],
-  tully: ['Blackwood', 'Bracken', 'Mallister', 'Piper', 'Vance', 'Darry', 'Whent', 'Mooton'],
-  arryn: ['Royce', 'Waynwood', 'Corbray', 'Hunter', 'Belmore', 'Redfort', 'Templeton'],
-  greyjoy: ['Harlaw', 'Drumm', 'Goodbrother', 'Botley', 'Blacktyde', 'Wynch'],
-  martell: ['Dayne', 'Yronwood', 'Fowler', 'Uller', 'Toland', 'Jordayne'],
-  targaryen: ['Velaryon', 'Celtigar', 'Massey', 'Bar Emmon'],
-}
-
-const FIRST_NAMES = [
-  'Benfred', 'Wylis', 'Cley', 'Halys', 'Leobald', 'Barbrey', 'Roger', 'Robett', 'Addam', 'Damon',
-  'Harys', 'Gawen', 'Baelor', 'Alester', 'Mathis', 'Arys', 'Lorent', 'Eldon', 'Brienne', 'Barristan',
-  'Beric', 'Bryce', 'Ronnet', 'Tytos', 'Jonos', 'Jason', 'Clement', 'Karyl', 'Raymun', 'Shella',
-  'Yohn', 'Anya', 'Lyn', 'Eon', 'Benedar', 'Horton', 'Rodrik', 'Dunstan', 'Gorold', 'Sawane',
-  'Edric', 'Anders', 'Franklyn', 'Harmen', 'Valena', 'Monford', 'Ardrian', 'Justin', 'Duram', 'Selwyn',
-  'Galbart', 'Wyman', 'Medger', 'Helman', 'Willam', 'Mariya', 'Desmond', 'Gilwood', 'Leyton', 'Jeyne',
-]
-const SUFFIXES = ['Ltda.', 'S.A.', 'ME', 'EIRELI', 'Participações']
-const TITLES = ['Lorde', 'Lady', 'Sor', 'Herdeiro', 'Herdeira', 'Castelão', 'Meistre da casa']
-
-function vassalHouses(b: Builder, lieges: Record<string, string>) {
-  const { house, person, link } = b
-  const rnd = mulberry32(1337)
-  const pick = <T,>(list: T[]): T => list[Math.floor(rnd() * list.length)] as T
-  const between = (min: number, max: number) => min + Math.floor(rnd() * (max - min + 1))
-  const chance = (p: number) => rnd() < p
-  const people: string[] = []
-  const houses: string[] = []
-
-  for (const [liegeKey, names] of Object.entries(VASSALS)) {
-    const liege = lieges[liegeKey]
-    if (!liege) continue
-    for (const family of names) {
-      const id = `v-${family.toLowerCase().replace(/\s+/g, '-')}`
-      const restricted = chance(0.07)
-      const vassal = house(id, `Casa ${family} ${pick(SUFFIXES)}`, 'other', {
-        status: chance(0.9) ? 'Ativa' : 'Baixada',
-        lists: restricted ? [pick([LIST.crown, LIST.warCrimes, LIST.exiles])] : [],
-      })
-      houses.push(vassal)
-      link(liege, vassal, 'related', between(5, 20), chance(0.9))
-      const members = between(1, 3)
-      for (let m = 0; m < members; m++) {
-        const title = m === 0 ? pick(['Lorde', 'Lady']) : pick(TITLES)
-        const memberId = `${id}-${m}`
-        const member = person(memberId, `${pick(FIRST_NAMES)} ${family}`, {
-          title: `${title} da Casa ${family}`,
-          pep: chance(0.05),
-          lists: chance(0.05) ? [pick([LIST.crown, LIST.exiles])] : [],
-        })
-        people.push(member)
-        link(vassal, member, m === 0 ? 'administrator' : 'partner', between(10, 60), chance(0.92))
-      }
-    }
-  }
-
-  // Marriages and fosterings between vassal houses, so the web is a network rather than a forest.
-  for (let i = 0; i < 18; i++) {
-    const from = pick(houses)
-    const to = pick(people)
-    if (to.startsWith(from)) continue
-    link(from, to, 'partner', between(5, 25), chance(0.85))
-  }
-}
+/** The small map: our own house, its bannermen and the analysed houses tied to it by a person. */
+const STARK_CIRCLE = ['stark', 'karstark', 'umber', 'reed', 'mormont', 'tully', 'lannister', 'bolton']
 
 export function buildNetwork(size: NetworkSize): Network {
   const builder = createBuilder()
   const lieges = greatHouses(builder)
-  if (size === 'big') vassalHouses(builder, lieges)
+
+  let { entities, links } = builder
+  if (size === 'small') {
+    const houses = new Set(STARK_CIRCLE)
+    const people = new Set(
+      links.filter(l => houses.has(l.from) && !houses.has(l.to)).map(l => l.to),
+    )
+    const keep = new Set([...houses, ...people])
+    entities = entities.filter(e => keep.has(e.id))
+    links = links.filter(l => keep.has(l.from) && keep.has(l.to))
+  }
 
   const network: Network = {
-    entities: builder.entities,
-    links: builder.links,
+    entities,
+    links,
     ownId: lieges.stark,
     centralId: lieges.lannister,
     conflictIds: new Set(),

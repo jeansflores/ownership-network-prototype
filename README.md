@@ -16,8 +16,9 @@ gerados aleatoriamente e mascarados. Nenhuma informação aqui vem de um sistema
 | **B · Exploração progressiva radial** | Começa pela casa consultada e abre grau a grau; duplo clique recentraliza | Redes enormes |
 | **C · Colunas de conflito + caminho** | Sua casa → casas analisadas → demais vínculos; traça o caminho entre duas entidades | Explicar *por que* há conflito |
 
-Troque de proposta no cabeçalho ou com ← e →. A URL carrega a proposta (`variant`), a casa
-consultada (`central`) e o tamanho da rede (`size=medium|big`), então um link pode ser enviado
+Dois tamanhos de rede: **Casa Stark** (a casa, seus vassalos e as casas ligadas a ela por
+uma pessoa) e **Grandes casas** (todas as grandes casas). Troque de proposta no cabeçalho ou com ← e →. A URL carrega a proposta (`variant`), a casa
+consultada (`central`) e o tamanho da rede (`size=small|medium`), então um link pode ser enviado
 apontando exatamente para o que se quer discutir.
 
 Legenda: setas vão da empresa para quem participa dela; linha tracejada é vínculo encerrado;
