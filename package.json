@@ -1,0 +1,35 @@
+{
+  "name": "ownership-network-prototype",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tabler/icons-react": "^3.49.0",
+    "@xyflow/react": "^12.12.0",
+    "antd": "^6.5.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^6.30.3",
+    "styled-components": "^6.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/styled-components": "^5.1.36",
+    "@vitejs/plugin-react": "^6.1.2",
+    "oxlint": "^1.88.0",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.4"
+  },
+  "description": "Protótipo descartável de mapa de rede societária com dados fictícios (Westeros)",
+  "engines": {
+    "node": ">=20"
+  }
+}
