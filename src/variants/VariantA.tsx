@@ -17,6 +17,7 @@ import { useMemo, useState } from 'react'
 import styled from 'styled-components'
 
 import { EntityDetails } from '../network/EntityDetails'
+import { ExportMenu } from '../network/ExportMenu'
 import type { EntityFlowNode } from '../network/EntityNode'
 import { handlesFor, NODE_HEIGHT, NODE_WIDTH, nodeTypes } from '../network/EntityNode'
 import { makeEdge } from '../network/flowEdges'
@@ -348,6 +349,7 @@ const Flow: FC<VariantProps> = ({ network, centralId, onCentralChange }) => {
                 checkedChildren="Encerrados"
                 unCheckedChildren="Encerrados"
               />
+              <ExportMenu title={`${byId.get(centralId)?.name ?? ''} · proposta A`} />
             </div>
           </Panel>
           <Panel position="bottom-right">

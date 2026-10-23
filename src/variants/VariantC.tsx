@@ -17,6 +17,7 @@ import { useMemo, useState } from 'react'
 import styled from 'styled-components'
 
 import { EntityDetails } from '../network/EntityDetails'
+import { ExportMenu } from '../network/ExportMenu'
 import type { EntityFlowNode } from '../network/EntityNode'
 import { handlesFor, NODE_HEIGHT, NODE_WIDTH, nodeTypes } from '../network/EntityNode'
 import { makeEdge } from '../network/flowEdges'
@@ -364,7 +365,8 @@ const Flow: FC<VariantProps> = ({ network, centralId, onCentralChange }) => {
           onPaneClick={() => setSelected(null)}>
           <Background gap={24} color="#e8e8e8" />
           <Panel position="top-left">
-            <Space>
+            <Space wrap>
+              <ExportMenu title={`${byId.get(centralId)?.name ?? ''} · proposta C`} />
               {columns.groups.map((group, index) => (
                 <Tag key={index} bordered={false}>
                   {COLUMN_LABELS[index] ?? `${index}º grau`}: {group.length}

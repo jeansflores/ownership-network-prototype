@@ -15,6 +15,7 @@ import { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 
 import { EntityDetails } from '../network/EntityDetails'
+import { ExportMenu } from '../network/ExportMenu'
 import type { EntityFlowNode } from '../network/EntityNode'
 import { handlesFor, NODE_HEIGHT, NODE_WIDTH, nodeTypes } from '../network/EntityNode'
 import { makeEdge } from '../network/flowEdges'
@@ -220,6 +221,7 @@ const Flow: FC<VariantProps> = ({ network, centralId, onCentralChange }) => {
                 onClick={() => setExpanded(new Set([centralId]))}>
                 Recolher
               </Button>
+              <ExportMenu title={`${byId.get(centralId)?.name ?? ''} · proposta B`} />
             </Space>
             <Text type="secondary" style={{ fontSize: 12 }}>
               {visible.size} de {depths.size} entidades visíveis · clique abre, duplo clique

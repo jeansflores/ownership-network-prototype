@@ -13,6 +13,8 @@
     "@tabler/icons-react": "^3.49.0",
     "@xyflow/react": "^12.12.0",
     "antd": "^6.5.2",
+    "html-to-image": "^1.11.13",
+    "jspdf": "^4.2.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-router-dom": "^6.30.3",

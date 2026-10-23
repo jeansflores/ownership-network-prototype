@@ -21,6 +21,9 @@ uma pessoa) e **Grandes casas** (todas as grandes casas). Troque de proposta no 
 consultada (`central`) e o tamanho da rede (`size=small|medium`), então um link pode ser enviado
 apontando exatamente para o que se quer discutir.
 
+Cada proposta tem um botão **Exportar** que gera o mapa inteiro, não só o que está na tela, em
+PNG, JPG ou PDF (A4, com título e data).
+
 Legenda: setas vão da empresa para quem participa dela; linha tracejada é vínculo encerrado;
 amarelo é conflito (pessoa ligada à sua casa e a uma casa analisada); vermelho é lista restritiva.
 

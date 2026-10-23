@@ -1,6 +1,17 @@
 // Standalone mock-up: three proposals for an ownership-network map, switchable from the header.
 // All data is fictional (the houses of Westeros as companies); nothing here comes from a real system.
-import { Button, ConfigProvider, Drawer, Segmented, Select, Space, Tag, theme, Typography } from 'antd'
+import {
+  App as AntdApp,
+  Button,
+  ConfigProvider,
+  Drawer,
+  Segmented,
+  Select,
+  Space,
+  Tag,
+  theme,
+  Typography,
+} from 'antd'
 import ptBR from 'antd/locale/pt_BR'
 import { useEffect, useMemo, useState } from 'react'
 import type { FC } from 'react'
@@ -180,7 +191,8 @@ const Page: FC = () => {
           </div>
         ))}
         <Paragraph type="secondary">
-          Use ← e → no teclado para alternar entre as propostas. A URL carrega a proposta, a casa
+          O botão "Exportar" de cada proposta gera o mapa inteiro em PNG, JPG ou PDF, no estado em que
+          está na tela. Use ← e → no teclado para alternar entre as propostas. A URL carrega a proposta, a casa
           consultada e o tamanho da rede, então o link pode ser compartilhado.
         </Paragraph>
       </Drawer>
@@ -221,9 +233,11 @@ export const App: FC = () => (
       },
     }}>
     <GlobalStyle />
-    <BrowserRouter>
-      <Page />
-    </BrowserRouter>
+    <AntdApp>
+      <BrowserRouter>
+        <Page />
+      </BrowserRouter>
+    </AntdApp>
   </ConfigProvider>
 )
 
