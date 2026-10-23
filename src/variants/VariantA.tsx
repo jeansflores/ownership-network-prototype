@@ -349,7 +349,11 @@ const Flow: FC<VariantProps> = ({ network, centralId, onCentralChange }) => {
                 checkedChildren="Encerrados"
                 unCheckedChildren="Encerrados"
               />
-              <ExportMenu title={`${byId.get(centralId)?.name ?? ''} · proposta A`} />
+              <ExportMenu
+                title={`${byId.get(centralId)?.name ?? ''} · proposta A`}
+                network={network}
+                centralId={centralId}
+              />
             </div>
           </Panel>
           <Panel position="bottom-right">

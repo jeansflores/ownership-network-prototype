@@ -192,7 +192,7 @@ const Page: FC = () => {
         ))}
         <Paragraph type="secondary">
           O botão "Exportar" de cada proposta gera o mapa inteiro em PNG, JPG ou PDF, no estado em que
-          está na tela. Use ← e → no teclado para alternar entre as propostas. A URL carrega a proposta, a casa
+          está na tela, e os dados do grafo em CSV ou Excel (entidades e vínculos). Use ← e → no teclado para alternar entre as propostas. A URL carrega a proposta, a casa
           consultada e o tamanho da rede, então o link pode ser compartilhado.
         </Paragraph>
       </Drawer>

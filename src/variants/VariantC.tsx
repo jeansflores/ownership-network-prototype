@@ -366,7 +366,11 @@ const Flow: FC<VariantProps> = ({ network, centralId, onCentralChange }) => {
           <Background gap={24} color="#e8e8e8" />
           <Panel position="top-left">
             <Space wrap>
-              <ExportMenu title={`${byId.get(centralId)?.name ?? ''} · proposta C`} />
+              <ExportMenu
+                title={`${byId.get(centralId)?.name ?? ''} · proposta C`}
+                network={network}
+                centralId={centralId}
+              />
               {columns.groups.map((group, index) => (
                 <Tag key={index} bordered={false}>
                   {COLUMN_LABELS[index] ?? `${index}º grau`}: {group.length}

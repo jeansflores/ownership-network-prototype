@@ -221,7 +221,11 @@ const Flow: FC<VariantProps> = ({ network, centralId, onCentralChange }) => {
                 onClick={() => setExpanded(new Set([centralId]))}>
                 Recolher
               </Button>
-              <ExportMenu title={`${byId.get(centralId)?.name ?? ''} · proposta B`} />
+              <ExportMenu
+                title={`${byId.get(centralId)?.name ?? ''} · proposta B`}
+                network={network}
+                centralId={centralId}
+              />
             </Space>
             <Text type="secondary" style={{ fontSize: 12 }}>
               {visible.size} de {depths.size} entidades visíveis · clique abre, duplo clique
